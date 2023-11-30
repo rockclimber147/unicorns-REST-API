@@ -13,10 +13,10 @@ app.listen(3000, () => {
     console.log('listening on port 3000')
 })
 
-async function getUnicorns() {
-    return await unicorn.find()
+async function getUnicorns(name) {
+    return await unicorn.find().limit(3)
 }
 
-getUnicorns().then(unicorns => {
+getUnicorns('Aurora').then(unicorns => {
     console.log(unicorns)
 })

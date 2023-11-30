@@ -5,7 +5,8 @@ const unicornSchema = new mongoose.Schema({
     dob: Date,
     loves: [String],
     weight: Number,
-    gender: String
+    gender: String,
+    vampires: Number
 })
 
-module.exports = mongoose.model('unicorn' ,unicornSchema)
+module.exports = mongoose.model('unicorn', unicornSchema)
