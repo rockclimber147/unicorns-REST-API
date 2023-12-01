@@ -35,24 +35,42 @@ function validateUnicornDisplayParameters(parameters){
 function getFieldValues(){
     let values = {};
 
-    let names = formatStringArrayInput(document.getElementById("unicornNameInput").value);
+    let names = formatStringArrayInput(document.getElementById("unicornNameInput"));
     if (names.length > 0){
         values.name = names;
     }
 
-    let loves = formatStringArrayInput(document.getElementById("unicornLovesInput").value);
+    let loves = formatStringArrayInput(document.getElementById("unicornLovesInput"));
     if (loves.length > 0){
         values.loves = loves;
     }
+
+
     
     return values;
 }
 
 /**
  * Breaks input string into array of strings and removes whitespace
- * @param {String} input A csv string
+ * @param {Node} input A csv string
  * @returns an Array of strings
  */
 function formatStringArrayInput(input){
-    return input.split(',').map(item => item.trim());
+    return input.value.split(',').map(item => item.trim());
+}
+
+/**
+ * Attempts to parse an int from the input Node value
+ * @param {Node} input The input Node
+ * @returns The parsed value
+ * @throws Error if the value cannot be parsed as an int
+ */
+function parseNumberFromInput(input){
+    let parsedValue = parseInt(input.value);
+    if (isNaN(parsedValue)){
+        input.value = 'Value must be able to be parsed as an int!';
+        throw new Error('Value must be able to be parsed as an int!')
+    } else {
+        return parsedValue;
+    }
 }
