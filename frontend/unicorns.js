@@ -27,3 +27,32 @@ function validateUnicornDisplayParameters(parameters){
     }
     return valid;
 }
+
+/**
+ * Parses and 
+ * @returns an object with the values of the input fields
+ */
+function getFieldValues(){
+    let values = {};
+
+    let names = formatStringArrayInput(document.getElementById("unicornNameInput").value);
+    if (names.length > 0){
+        values.name = names;
+    }
+
+    let loves = formatStringArrayInput(document.getElementById("unicornLovesInput").value);
+    if (loves.length > 0){
+        values.loves = loves;
+    }
+    
+    return values;
+}
+
+/**
+ * Breaks input string into array of strings and removes whitespace
+ * @param {String} input A csv string
+ * @returns an Array of strings
+ */
+function formatStringArrayInput(input){
+    return input.split(',').map(item => item.trim());
+}
