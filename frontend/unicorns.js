@@ -121,7 +121,11 @@ function getNumberRelationType(input) {
     }
 }
 
-
+/**
+ * Generates a URL string from an object acquired from the web page
+ * @param {Object} inputObject An Object storing the data from the web page
+ * @returns A URL String to send to the server
+ */
 function generateRequestURL(inputObject){
     let urlArray = []
     
@@ -133,6 +137,11 @@ function generateRequestURL(inputObject){
     return queryParams
 }
 
+/**
+ * Populates a table with the data from the server given the parameters
+ * @param {Object} parameters The parameters to display the unicorns with
+ * @param {Object} data The data received from the server
+ */
 function populateTable(parameters, data) {
     let table = document.getElementById("queryResultsTable");
     table.innerHTML = '';
