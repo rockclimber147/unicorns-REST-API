@@ -45,10 +45,45 @@ function getFieldValues(){
         values.loves = loves;
     }
 
-
+    let weightRelationType;
+    switch(document.getElementById("weightRelationInput").value){
+        case 'less than':
+            weightRelationType = 'weight_$lt';
+            break;
+        case 'greater than':
+            weightRelationType = 'weight_$gt';
+            break;
+        case 'equal to':
+            weightRelationType = 'weight_$eq';
+            break;
+    }
+    let weight = document.getElementById("unicornWeightInput");
+    if (weight.value !== ''){
+        values.weightRelationType = parseNumberFromInput(weight);
+    }
     
+
+    let vampireRelationType;
+    switch(document.getElementById("vampiresRelationInput").value){
+        case 'less than':
+            vampireRelationType = 'vampires_$lt';
+            break;
+        case 'greater than':
+            vampireRelationType = 'vampires_$gt';
+            break;
+        case 'equal to':
+            vampireRelationType = 'vampires_$eq';
+            break;
+    }
+    let vampires = document.getElementById("unicornVampiresInput");
+    if (vampires.value !== ''){
+        values.vampireRelationType = parseNumberFromInput(vampires);
+    }
+
     return values;
 }
+
+console.log(getFieldValues())
 
 /**
  * Breaks input string into array of strings and removes whitespace
@@ -56,7 +91,11 @@ function getFieldValues(){
  * @returns an Array of strings
  */
 function formatStringArrayInput(input){
-    return input.value.split(',').map(item => item.trim());
+    let values = input.value.split(',').map(item => item.trim());
+    if (values[0] === '' && values.length === 1){
+        values = [];
+    }
+    return values;
 }
 
 /**
