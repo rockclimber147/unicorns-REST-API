@@ -14,9 +14,9 @@ app.listen(3000, () => {
 })
 
 async function getUnicorns(name) {
-    return await unicorn.find().limit(3)
+    return await unicorn.find({ $or: [{ name: name }, { weight: { $lt: 1700} }] })
 }
 
-getUnicorns('Aurora').then(unicorns => {
+getUnicorns('Horny').then(unicorns => {
     console.log(unicorns)
 })
