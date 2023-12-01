@@ -7,8 +7,9 @@ function getUnicornDisplayParameters() {
     let parameters = {};
     for (let i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) { }
-        parameters[checkboxes[i].id.replace('flexCheck', '')] = checkboxes[i].checked;
+        parameters[checkboxes[i].id.replace('flexCheck', '').toLowerCase()] = checkboxes[i].checked;
     }
+    console.log(parameters)
     return parameters;
 }
 
@@ -132,12 +133,36 @@ function generateRequestURL(inputObject){
     return queryParams
 }
 
+function populateTable(parameters, data) {
+    let table = document.getElementById("queryResultsTable");
+    table.innerHTML = '';
+    let headerRow = document.createElement("tr");
+    for (let key in parameters) {
+        if (parameters[key]) {
+            let header = document.createElement("th");
+            header.innerHTML = key;
+            headerRow.appendChild(header);
+        }
+    }
+    table.appendChild(headerRow);
+    for (let i = 0; i < data.length; i++) {
+        let row = document.createElement("tr");
+        for (let key in parameters) {
+            if (parameters[key]) {
+                let cell = document.createElement("td");
+                cell.innerHTML = data[i][key];
+                row.appendChild(cell);
+            }
+        }
+        table.appendChild(row);
+    }
+}
+
 
 document.getElementById("unicornSearchButton").addEventListener("click", async () => {
     try {
-        let parameters = getUnicornDisplayParameters();
-        if (validateUnicornDisplayParameters(parameters)) {
-            // console.log(parameters);
+        let tableParameters = getUnicornDisplayParameters();
+        if (validateUnicornDisplayParameters(tableParameters)) {
         } else {
             throw new Error('At least one parameter must be selected!');
         }
@@ -147,10 +172,9 @@ document.getElementById("unicornSearchButton").addEventListener("click", async (
         response = await fetch(`http://localhost:3000/unicorns/` + queryParams)
         responseJSON = await response.json()
         console.log(responseJSON)
+        populateTable(tableParameters, responseJSON)
     }
     catch (err) {
         alert(err);
     }
-
-    
 });
