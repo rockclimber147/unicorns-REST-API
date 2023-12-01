@@ -53,7 +53,7 @@ function getFieldValues() {
     }
 
     let gender = document.getElementById("unicornGenderInput").value;
-    if (gender !== 'Any') {
+    if (gender != 'Any') {
         values.gender = gender;
     }
 
@@ -63,11 +63,11 @@ function getFieldValues() {
         values[vampireRelationType] = parseNumberFromInput(vampires);
     }
 
-    let vaccinated = document.getElementById("unicornGenderInput").value;
-    if (vaccinated !== 'Any') {
+    let vaccinated = document.getElementById("unicornVaccinatedInput").value;
+    if (vaccinated != 'Any') {
         values.vaccinated = vaccinated;
     }
-
+    console.log(vaccinated)
     return values;
 }
 
