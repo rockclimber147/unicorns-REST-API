@@ -22,20 +22,19 @@
 </head>
 
 <body>
-    <div class="container">
-        <fieldset class="mb-3 container" id="unicornInfoFields">
+    <h1>Assignment 3 Unicorns!</h1>
+    <div class="container row">
+        <fieldset class="mb-3 container col-md" id="unicornInfoFields">
             <p class="form-group">
                 <label>Name</label>
                 <input type="text" id="unicornNameInput" class="form-control"
                     placeholder="Enter one or more unicorn name separated by commas">
             </p>
-
             <p class="form-group">
                 <label>Loves</label>
                 <input type="text" id="unicornLovesInput" class="form-control"
                     placeholder="Enter one or more unicorn loves separated by commas">
             </p>
-
             <p class="form-group">
                 <label>Weight
                     <select class="dropdown" id="weightRelationInput">
@@ -45,7 +44,7 @@
                     </select></label>
                 <input type="text" id="unicornWeightInput" class="form-control" placeholder="Enter a number">
             </p>
-            <p>
+            <p class="form-group">
                 <label>Gender</label>
                 <select class="form-control" id="unicornGenderInput">
                     <option>Any</option>
@@ -62,7 +61,7 @@
                     </select></label>
                 <input type="text" id="unicornVampiresInput" class="form-control" placeholder="Enter a number">
             </p>
-            <p>
+            <p class="form-group">
                 <label for="genderInput">Vaccinated</label>
                 <select class="form-control" id="unicornVaccinatedInput">
                     <option>Any</option>
@@ -72,65 +71,65 @@
             </p>
             <p class="form-group">
                 <label>Sort by</label>
-                <input type="text" id="unicornSortByInput" class="form-control" placeholder="Enter sorting parameters e.g. ">
+                <input type="text" id="unicornSortByInput" class="form-control"
+                    placeholder="Enter sorting parameters e.g. ">
             </p>
-
-            <fieldset class="tag_checkbox">
-                <legend>What what attributes should be displayed?</legend>
-                <div id="unicornAttributeCheckboxes" class="d-flex justify-content-around">
-                    <div class="form-check">
+        </fieldset>
+        <fieldset class="tag_checkbox col-md">
+            <legend>What what attributes should be displayed?</legend>
+            <div id="unicornAttributeCheckboxes" class="container">
+                <div class="row">
+                    <div class="form-check col-sm">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckName" checked>
                         <label class="form-check-label" for="flexCheckName">
                             Name
                         </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check col-sm">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckWeight" checked>
                         <label class="form-check-label" for="flexCheckWeight">
                             Weight
                         </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check col-sm">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckVampires" checked>
                         <label class="form-check-label" for="flexCheckVampires">
                             Vampires
                         </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check col-sm">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckVaccinated" checked>
                         <label class="form-check-label" for="flexCheckVaccinated">
                             Vaccinated
                         </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check col-sm">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckGender" checked>
                         <label class="form-check-label" for="flexCheckGender">
                             Gender
                         </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check col-sm">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckLoves" checked>
                         <label class="form-check-label" for="flexCheckLoves">
                             Loves
                         </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check col-sm">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDob" checked>
                         <label class="form-check-label" for="flexCheckDob">
                             Dob
                         </label>
                     </div>
                 </div>
-            </fieldset>
+            </div>
+            <button id="unicornSearchButton">SEARCH</button>
         </fieldset>
-        <button id="unicornSearchButton">SEARCH</button>
-        <table id="queryResultsTable">
         
+        <table id="queryResultsTable">
+
         </table>
     </div>
-    
-    
-
     <script src="unicorns.js"></script>
 </body>
 
