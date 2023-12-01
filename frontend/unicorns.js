@@ -29,7 +29,7 @@ function validateUnicornDisplayParameters(parameters){
 }
 
 /**
- * Parses and 
+ * Parses the unicorn input fields and returns an object with the values
  * @returns an object with the values of the input fields
  */
 function getFieldValues(){
@@ -46,44 +46,44 @@ function getFieldValues(){
     }
 
     let weightRelationType;
+    console.log(document.getElementById("weightRelationInput").value);
     switch(document.getElementById("weightRelationInput").value){
-        case 'less than':
+        case 'less than:':
             weightRelationType = 'weight_$lt';
             break;
-        case 'greater than':
+        case 'greater than:':
             weightRelationType = 'weight_$gt';
             break;
-        case 'equal to':
+        case 'equal to:':
             weightRelationType = 'weight_$eq';
             break;
     }
     let weight = document.getElementById("unicornWeightInput");
     if (weight.value !== ''){
-        values.weightRelationType = parseNumberFromInput(weight);
+        values[weightRelationType] = parseNumberFromInput(weight);
     }
     
 
     let vampireRelationType;
     switch(document.getElementById("vampiresRelationInput").value){
-        case 'less than':
+        case 'less than:':
             vampireRelationType = 'vampires_$lt';
             break;
-        case 'greater than':
+        case 'greater than:':
             vampireRelationType = 'vampires_$gt';
             break;
-        case 'equal to':
+        case 'equal to:':
             vampireRelationType = 'vampires_$eq';
             break;
     }
     let vampires = document.getElementById("unicornVampiresInput");
     if (vampires.value !== ''){
-        values.vampireRelationType = parseNumberFromInput(vampires);
+        values[vampireRelationType] = parseNumberFromInput(vampires);
     }
 
     return values;
 }
 
-console.log(getFieldValues())
 
 /**
  * Breaks input string into array of strings and removes whitespace
@@ -113,3 +113,7 @@ function parseNumberFromInput(input){
         return parsedValue;
     }
 }
+
+document.getElementById("unicornSearchButton").addEventListener("click", () => {
+    console.log(getFieldValues())
+});
