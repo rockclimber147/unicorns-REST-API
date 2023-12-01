@@ -40,10 +40,11 @@ function generateQueryObject(incomingQuery){
         console.log('k:v', key, value) 
         // handle the case where the value is a relational query (weight or vampires)
         if (key.includes('_')) {
-            console.log(key)
             let [field, relation] = key.split('_')
-            console.log('field:relation', field, relation)
             queryObject[field] = { [`${relation}`]: incomingQuery[key] }
+        // handle the case where an array of string is given (loves or name)
+        } else if (key === 'loves' || key === 'name') {
+            queryObject[key] = { $in: incomingQuery[key].split(',') }
         } else {
             queryObject[key] = incomingQuery[key]
         }

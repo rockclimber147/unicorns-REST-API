@@ -39,7 +39,8 @@ function getFieldValues() {
 
     let names = formatStringArrayInput(document.getElementById("unicornNameInput"));
     if (names.length > 0) {
-        values.name = names;
+        // Names should be title case
+        values.name = names.map(item => item.charAt(0).toUpperCase() + item.slice(1));
     }
 
     let loves = formatStringArrayInput(document.getElementById("unicornLovesInput"));
@@ -80,7 +81,8 @@ function getFieldValues() {
  * @returns an Array of strings
  */
 function formatStringArrayInput(input) {
-    let values = input.value.split(',').map(item => item.trim());
+    // Split the string into an array of strings, remove whitespace, and capitalize the first letter
+    let values = input.value.split(',').map(item => item.trim().toLowerCase());
     if (values[0] === '' && values.length === 1) {
         values = [];
     }
