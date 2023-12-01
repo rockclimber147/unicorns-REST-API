@@ -17,6 +17,8 @@ async function getUnicorns(name) {
     return await unicorn.find({ $or: [{ name: name }, { weight: { $lt: 1700} }] })
 }
 
-getUnicorns('Horny').then(unicorns => {
-    console.log(unicorns)
+app.use(express.urlencoded({ extended: true}))
+
+app.get('/unicorns', (req, res) => {
+    console.log('request received!:', req.query)
 })

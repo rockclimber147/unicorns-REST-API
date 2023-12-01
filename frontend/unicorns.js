@@ -6,7 +6,7 @@ function getUnicornDisplayParameters() {
     let checkboxes = document.getElementById("unicornAttributeCheckboxes").getElementsByTagName("input");
     let parameters = {};
     for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked){}
+        if (checkboxes[i].checked) { }
         parameters[checkboxes[i].id.replace('flexCheck', '')] = checkboxes[i].checked;
     }
     return parameters;
@@ -119,7 +119,20 @@ function getNumberRelationType(input) {
     }
 }
 
-document.getElementById("unicornSearchButton").addEventListener("click", () => {
+
+function generateRequestURL(inputObject){
+    let urlArray = []
+    
+    for (const key in inputObject) {
+        urlArray.push(`${key}=${inputObject[key]}`)
+    }
+
+    let queryParams = '?' + urlArray.join('&')
+    return queryParams
+}
+
+
+document.getElementById("unicornSearchButton").addEventListener("click",async () => {
     try {
         let parameters = getUnicornDisplayParameters();
         if (validateUnicornDisplayParameters(parameters)) {
@@ -127,9 +140,12 @@ document.getElementById("unicornSearchButton").addEventListener("click", () => {
         } else {
             throw new Error('At least one parameter must be selected!');
         }
-        console.log(getFieldValues());
+        let values = getFieldValues();
+        response = await fetch(`http://localhost:3000/unicorns/` + generateRequestURL(values))
     }
-     catch (err) {
+    catch (err) {
         alert(err);
-     }
+    }
+
+    
 });
