@@ -24,24 +24,28 @@ app.use(express.urlencoded({ extended: true}))
 
 app.get('/unicorns', async (req, res) => {
     console.log('request received!:', req.query)
-    result = await unicorn.find();
+    queryObject = generateQueryObject(req.query)
+    console.log('query object:', queryObject)
+    result = await unicorn.find(queryObject);
     // console.log(result)
     res.json(result)
 })
 
-function generateQueryObject(req){
+function generateQueryObject(incomingQuery){
     // Make an empty query object
     let queryObject = {}
     // Iterate over the query parameters
-    for (const key in req.query) {
-        let value = req.query[key]
-        // handle the case where the value is a relational query
-        if (value.includes('_')) {
-            
-            let [field, relation] = value.split('_')
-            queryObject[field] = { [`${relation}`]: req.query[key] }
+    for (const key in incomingQuery) {
+        let value = incomingQuery[key]
+        console.log('k:v', key, value) 
+        // handle the case where the value is a relational query (weight or vampires)
+        if (key.includes('_')) {
+            console.log(key)
+            let [field, relation] = key.split('_')
+            console.log('field:relation', field, relation)
+            queryObject[field] = { [`${relation}`]: incomingQuery[key] }
         } else {
-            queryObject[key] = req.query[key]
+            queryObject[key] = incomingQuery[key]
         }
     }
     return queryObject
