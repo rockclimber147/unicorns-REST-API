@@ -6,6 +6,7 @@ function getUnicornDisplayParameters() {
     let checkboxes = document.getElementById("unicornAttributeCheckboxes").getElementsByTagName("input");
     let parameters = {};
     for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked){}
         parameters[checkboxes[i].id.replace('flexCheck', '')] = checkboxes[i].checked;
     }
     return parameters;
@@ -51,11 +52,20 @@ function getFieldValues() {
         values[weightRelationType] = parseNumberFromInput(weight);
     }
 
+    let gender = document.getElementById("unicornGenderInput").value;
+    if (gender !== 'Any') {
+        values.gender = gender;
+    }
 
     let vampireRelationType = getNumberRelationType('vampires');
     let vampires = document.getElementById("unicornVampiresInput");
     if (vampires.value !== '') {
         values[vampireRelationType] = parseNumberFromInput(vampires);
+    }
+
+    let vaccinated = document.getElementById("unicornGenderInput").value;
+    if (vaccinated !== 'Any') {
+        values.vaccinated = vaccinated;
     }
 
     return values;
@@ -110,5 +120,16 @@ function getNumberRelationType(input) {
 }
 
 document.getElementById("unicornSearchButton").addEventListener("click", () => {
-    console.log(getFieldValues())
+    try {
+        let parameters = getUnicornDisplayParameters();
+        if (validateUnicornDisplayParameters(parameters)) {
+            console.log(parameters);
+        } else {
+            throw new Error('At least one parameter must be selected!');
+        }
+        console.log(getFieldValues());
+    }
+     catch (err) {
+        alert(err);
+     }
 });
