@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const unicorn = require('./Unicorn.js')
-const cors= require('cors')
+const cors = require('cors')
 
 const app = express()
 mongoose.connect('mongodb+srv://rockclimber147:GenericAtlaspassw0rd@assignment-3-unicorns.kaartmf.mongodb.net/?retryWrites=true&w=majority').then(() => {
@@ -22,7 +22,9 @@ async function getUnicorns(name) {
 
 app.use(express.urlencoded({ extended: true}))
 
-app.get('/unicorns', (req, res) => {
+app.get('/unicorns', async (req, res) => {
     console.log('request received!:', req.query)
-    res.send('hi')
+    result = await unicorn.find();
+    console.log(result)
+    res.json(result)
 })

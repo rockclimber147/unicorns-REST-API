@@ -67,7 +67,6 @@ function getFieldValues() {
     if (vaccinated != 'Any') {
         values.vaccinated = vaccinated;
     }
-    console.log(vaccinated)
     return values;
 }
 
@@ -132,7 +131,7 @@ function generateRequestURL(inputObject){
 }
 
 
-document.getElementById("unicornSearchButton").addEventListener("click",async () => {
+document.getElementById("unicornSearchButton").addEventListener("click", async () => {
     try {
         let parameters = getUnicornDisplayParameters();
         if (validateUnicornDisplayParameters(parameters)) {
@@ -142,6 +141,8 @@ document.getElementById("unicornSearchButton").addEventListener("click",async ()
         }
         let values = getFieldValues();
         response = await fetch(`http://localhost:3000/unicorns/` + generateRequestURL(values))
+        responseJSON = await response.json()
+        console.log(responseJSON)
     }
     catch (err) {
         alert(err);
