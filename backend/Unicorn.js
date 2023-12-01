@@ -6,7 +6,8 @@ const unicornSchema = new mongoose.Schema({
     loves: [String],
     weight: Number,
     gender: String,
-    vampires: Number
+    vampires: Number,
+    vaccinated: Boolean
 })
 
 module.exports = mongoose.model('unicorn', unicornSchema)

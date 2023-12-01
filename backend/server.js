@@ -35,7 +35,7 @@ function generateQueryObject(req){
     // Iterate over the query parameters
     for (const key in req.query) {
         let value = req.query[key]
-        // handl the case where the value is a relational query
+        // handle the case where the value is a relational query
         if (value.includes('_')) {
             
             let [field, relation] = value.split('_')
