@@ -25,6 +25,24 @@ app.use(express.urlencoded({ extended: true}))
 app.get('/unicorns', async (req, res) => {
     console.log('request received!:', req.query)
     result = await unicorn.find();
-    console.log(result)
+    // console.log(result)
     res.json(result)
 })
+
+function generateQueryObject(req){
+    // Make an empty query object
+    let queryObject = {}
+    // Iterate over the query parameters
+    for (const key in req.query) {
+        let value = req.query[key]
+        // handl the case where the value is a relational query
+        if (value.includes('_')) {
+            
+            let [field, relation] = value.split('_')
+            queryObject[field] = { [`${relation}`]: req.query[key] }
+        } else {
+            queryObject[key] = req.query[key]
+        }
+    }
+    return queryObject
+}

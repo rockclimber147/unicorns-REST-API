@@ -135,12 +135,14 @@ document.getElementById("unicornSearchButton").addEventListener("click", async (
     try {
         let parameters = getUnicornDisplayParameters();
         if (validateUnicornDisplayParameters(parameters)) {
-            console.log(parameters);
+            // console.log(parameters);
         } else {
             throw new Error('At least one parameter must be selected!');
         }
         let values = getFieldValues();
-        response = await fetch(`http://localhost:3000/unicorns/` + generateRequestURL(values))
+        let queryParams = generateRequestURL(values);
+        console.log('Query parameters:', queryParams);
+        response = await fetch(`http://localhost:3000/unicorns/` + queryParams)
         responseJSON = await response.json()
         console.log(responseJSON)
     }
