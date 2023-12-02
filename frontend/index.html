@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Profile page</title>
+    <title>Unicorn search</title>
     <meta name="comp1800 template" content="My 1800 App">
 
     <!------------------------>
@@ -70,15 +70,33 @@
                 </select>
             </p>
             <p class="form-group">
-                <label>Sort by</label>
-                <input type="text" id="unicornSortByInput" class="form-control"
-                    placeholder="Enter sorting parameters e.g. ">
+                <label>Sort by 
+                    <select class="dropdown" id="sortParameter">
+                        <option disabled>Name</option>
+                        <option>Loves</option>
+                        <option>Weight</option>
+                        <option>Gender</option>
+                        <option>Vampires</option>
+                        <option>Vaccinated</option>
+                        <option>Date of birth</option>
+                    </select>
+                    in 
+                    <select class="dropdown" id="sortAscDesc">
+                        <option>Ascending</option>
+                        <option>Descending</option>
+                    </select>
+                     order
+                    <button id="sortParameterAddButton">Add</button>
+                </label>
+                <input disabled type="text" id="unicornSortByInput" class="form-control"
+                    placeholder="Sorting parameters">
+                    <button id="sortParameterClearButton">CLEAR</button>
             </p>
             Find unicorns with <select class="dropdown" id="fieldRelationInput">
                 <option id="$and">ALL</option>
                 <option id="$or">ANY</option>
             </select>
-             of the above properties
+            of the above properties
         </fieldset>
         <fieldset class="tag_checkbox col-md">
             <legend>What what attributes should be displayed?</legend>

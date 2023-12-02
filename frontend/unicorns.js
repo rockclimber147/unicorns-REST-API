@@ -181,3 +181,33 @@ document.getElementById("unicornSearchButton").addEventListener("click", async (
         alert(err);
     }
 });
+
+document.getElementById("sortParameterClearButton").addEventListener("click", () => {
+    document.getElementById("unicornSortByInput").value = '';
+    let sortOptions = document.getElementById("sortParameter").options;
+    for (let i = 0; i < sortOptions.length; i++) {
+        sortOptions[i].removeAttribute('disabled');
+    }
+});
+
+document.getElementById("sortParameterAddButton").addEventListener("click", () => {
+    // get the dropdown list
+    let input = document.getElementById("sortParameter");
+    // store all options
+    let sortOptions = input.options;
+    currentOption = sortOptions[input.selectedIndex]
+
+    if (!currentOption.disabled) {
+        currentOption.setAttribute('disabled', true);
+        let sortParameter = input.value;
+        let sortOrder = document.getElementById("sortAscDesc").value;
+        let sortString = `${sortParameter}:${sortOrder}`;
+
+        // update field with value or coma separated value
+        if (document.getElementById("unicornSortByInput").value !== '') {
+            document.getElementById("unicornSortByInput").value += ',' + sortString;
+        } else {
+            document.getElementById("unicornSortByInput").value = sortString;
+        }
+    }
+});
