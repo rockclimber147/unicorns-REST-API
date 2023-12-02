@@ -157,13 +157,20 @@ function populateTable(data, params) {
 document.getElementById("unicornSearchButton").addEventListener("click", async () => {
     try {
         let tableParameters = getUnicornDisplayParameters();
+        if (tableParameters.length === 0) {
+            throw new Error('You must select at least one parameter to display!')
+        }
         let values = getFieldValues();
+        console.log('Field values:', values);
+
+        values.display = tableParameters.join(',');
+        console.log('Display parameters:', values.display);
+
+        // tableParameters['sort'];
+        // console.log('Sort parameters:', tableParameters['search']);
 
         let queryParams = generateRequestURL(values);
         console.log('Query parameters:', queryParams);
-
-        let displayParameters = 'display=' + tableParameters.join(',');
-        console.log('Display parameters:', displayParameters);
 
         response = await fetch(`http://localhost:3000/unicorns/` + queryParams)
         responseJSON = await response.json()

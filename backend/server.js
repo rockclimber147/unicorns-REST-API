@@ -24,12 +24,26 @@ app.use(express.urlencoded({ extended: true}))
 
 app.get('/unicorns', async (req, res) => {
     console.log('request received!:', req.query)
+
+    let displayObject = generateDisplayObject(req.query.display)
+    delete req.query.display;
+
     queryObject = generateQueryObject(req.query)
     console.log('query object:', queryObject)
-    result = await unicorn.find(queryObject);
+
+    result = await unicorn.find(queryObject, displayObject);
     // console.log(result)
     res.json(result)
 })
+
+function generateDisplayObject(displayString) {
+    let displayObject = {_id: 0}
+    let displayArray = displayString.split(',')
+    for (const key of displayArray) {
+        displayObject[key] = 1
+    }
+    return displayObject
+} 
 
 function generateQueryObject(incomingQuery){
     // Make an empty query object
