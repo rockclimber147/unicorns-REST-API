@@ -1,33 +1,17 @@
 /**
- * Gets the values of the checkboxes and constructs an object with the values
- * @returns Parameter object
+ * Gets the values of the checkboxes and constructs an Array with the values
+ * @returns Parameter Array
  */
 function getUnicornDisplayParameters() {
     let checkboxes = document.getElementById("unicornAttributeCheckboxes").getElementsByTagName("input");
-    let parameters = {};
+    let parameters = [];
     for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) { }
-        parameters[checkboxes[i].id.replace('flexCheck', '').toLowerCase()] = checkboxes[i].checked;
+        if (checkboxes[i].checked) {
+            parameters.push(checkboxes[i].id.replace('flexCheck', '').toLowerCase())
+        }
     }
     console.log(parameters)
     return parameters;
-}
-
-
-/**
- * Validates the parameters to ensure at least one is true
- * @param {Object} parameters The parameters to display the unicorns with
- * @returns True if the parameters are valid, false otherwise
- */
-function validateUnicornDisplayParameters(parameters) {
-    let valid = false;
-    for (let key in parameters) {
-        if (parameters[key] === true) {
-            valid = true;
-            break;
-        }
-    }
-    return valid;
 }
 
 /**
@@ -131,9 +115,9 @@ function getNumberRelationType(input) {
  * @param {Object} inputObject An Object storing the data from the web page
  * @returns A URL String to send to the server
  */
-function generateRequestURL(inputObject){
+function generateRequestURL(inputObject) {
     let urlArray = []
-    
+
     for (const key in inputObject) {
         urlArray.push(`${key}=${inputObject[key]}`)
     }
@@ -147,26 +131,23 @@ function generateRequestURL(inputObject){
  * @param {Object} parameters The parameters to display the unicorns with
  * @param {Object} data The data received from the server
  */
-function populateTable(parameters, data) {
+function populateTable(data, params) {
     let table = document.getElementById("queryResultsTable");
     table.innerHTML = '';
     let headerRow = document.createElement("tr");
-    for (let key in parameters) {
-        if (parameters[key]) {
-            let header = document.createElement("th");
-            header.innerHTML = key;
-            headerRow.appendChild(header);
-        }
+    for (let key of params) {
+        console.log(key);
+        let header = document.createElement("th");
+        header.innerHTML = key;
+        headerRow.appendChild(header);
     }
     table.appendChild(headerRow);
     for (let i = 0; i < data.length; i++) {
         let row = document.createElement("tr");
-        for (let key in parameters) {
-            if (parameters[key]) {
-                let cell = document.createElement("td");
-                cell.innerHTML = data[i][key];
-                row.appendChild(cell);
-            }
+        for (let key of params) {
+            let cell = document.createElement("td");
+            cell.innerHTML = data[i][key];
+            row.appendChild(cell);
         }
         table.appendChild(row);
     }
@@ -176,17 +157,18 @@ function populateTable(parameters, data) {
 document.getElementById("unicornSearchButton").addEventListener("click", async () => {
     try {
         let tableParameters = getUnicornDisplayParameters();
-        if (validateUnicornDisplayParameters(tableParameters)) {
-        } else {
-            throw new Error('At least one parameter must be selected!');
-        }
         let values = getFieldValues();
+
         let queryParams = generateRequestURL(values);
         console.log('Query parameters:', queryParams);
+
+        let displayParameters = 'display=' + tableParameters.join(',');
+        console.log('Display parameters:', displayParameters);
+
         response = await fetch(`http://localhost:3000/unicorns/` + queryParams)
         responseJSON = await response.json()
         console.log(responseJSON)
-        populateTable(tableParameters, responseJSON)
+        populateTable(responseJSON, tableParameters)
     }
     catch (err) {
         alert(err);
