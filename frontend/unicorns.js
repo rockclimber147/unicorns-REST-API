@@ -37,6 +37,9 @@ function validateUnicornDisplayParameters(parameters) {
 function getFieldValues() {
     let values = {};
 
+    let selectedIndex = document.getElementById('fieldRelationInput').selectedIndex;
+    values.fieldRelationType = document.getElementById('fieldRelationInput').options[selectedIndex].id;
+
     let names = formatStringArrayInput(document.getElementById("unicornNameInput"));
     if (names.length > 0) {
         // Names should be title case
