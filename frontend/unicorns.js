@@ -163,11 +163,13 @@ document.getElementById("unicornSearchButton").addEventListener("click", async (
         let values = getFieldValues();
         console.log('Field values:', values);
 
+        // Add display parameters
         values.display = tableParameters.join(',');
         console.log('Display parameters:', values.display);
 
-        tableParameters['sort'] = document.getElementById("unicornSortByInput").value.toLowerCase().replace('ascending', '1').replace('descending', '-1');
-        console.log('Sort parameters:', tableParameters['sort']);
+        // Add sort parameters
+        values.sort = document.getElementById("unicornSortByInput").value.toLowerCase().replace('ascending', '1').replace('descending', '-1');
+        console.log('Sort parameters:', values.sort);
 
         let queryParams = generateRequestURL(values);
         console.log('Query parameters:', queryParams);

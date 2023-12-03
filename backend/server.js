@@ -20,21 +20,45 @@ app.use(express.urlencoded({ extended: true }))
 
 app.get('/unicorns', async (req, res) => {
     try {
-    console.log('request received!:', req.query)
-    let displayObject = generateDisplayObject(req.query.display)
-    delete req.query.display;
+        console.log('request received!:', req.query)
+        let displayObject = generateDisplayObject(req.query.display)
+        delete req.query.display;
+        let sortObject;
+        let applySort = false;
+        if (req.query.sort !== "") {
+            sortObject = generateSortObject(req.query.sort)
+            applySort = true;
+        }
+        delete req.query.sort;
 
-    queryObject = generateQueryObject(req.query)
-    console.log('query object:', queryObject)
-
-    result = await unicorn.find(queryObject, displayObject);
-    // console.log(result)
-    res.json(result)
+        queryObject = generateQueryObject(req.query)
+        console.log('query object:', queryObject)
+        if (applySort){
+            result = await unicorn.find(queryObject, displayObject).sort(sortObject);
+        } else {
+            result = await unicorn.find(queryObject, displayObject);
+        }
+        res.json(result)
     } catch (err) {
         console.log(err)
         res.status(500).send(err)
     }
 })
+
+function generateSortObject(sortString) {
+    try {
+        let sortObject = {}
+        let sortArray = sortString.split(',')
+        for (const key of sortArray) {
+            let [field, order] = key.split(':')
+            sortObject[field] = parseInt(order)
+        }
+        return sortObject
+    } catch (err) {
+        console.log(err)
+        throw new Error('Invalid sort parameters!')
+    }
+}
 
 function generateDisplayObject(displayString) {
     try {
@@ -51,8 +75,8 @@ function generateDisplayObject(displayString) {
     }
 }
 
-    function generateQueryObject(incomingQuery) {
-        try{
+function generateQueryObject(incomingQuery) {
+    try {
         // Make an empty query object
         let queryParams = [];
         let queryObject = {};
