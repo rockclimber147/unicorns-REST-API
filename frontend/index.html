@@ -70,9 +70,20 @@
                 </select>
             </p>
             <p class="form-group">
-                <label>Sort by 
+                <label for="unicornDOBInput">Born
+                    <select class="dropdown" id="unicornDOBRelation" onchange="updateDates()">
+                        <option>Between</option>
+                        <option>After</option>
+                        <option>Before</option>
+                    </select>
+                </label>
+                <input type="date" class="form-control" id="unicornDOBInput1">
+                <input type="date" class="form-control" id="unicornDOBInput2">
+            </p>
+            <p class="form-group">
+                <label>Sort by
                     <select class="dropdown" id="sortParameter">
-                        <option disabled>Name</option>
+                        <option>Name</option>
                         <option>Loves</option>
                         <option>Weight</option>
                         <option>Gender</option>
@@ -80,17 +91,17 @@
                         <option>Vaccinated</option>
                         <option>DOB</option>
                     </select>
-                    in 
+                    in
                     <select class="dropdown" id="sortAscDesc">
                         <option>Ascending</option>
                         <option>Descending</option>
                     </select>
-                     order
+                    order
                     <button id="sortParameterAddButton">Add</button>
                 </label>
                 <input disabled type="text" id="unicornSortByInput" class="form-control"
                     placeholder="Sorting parameters">
-                    <button id="sortParameterClearButton">CLEAR</button>
+                <button id="sortParameterClearButton">CLEAR</button>
             </p>
             Find unicorns with <select class="dropdown" id="fieldRelationInput">
                 <option id="$and">ALL</option>

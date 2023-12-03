@@ -110,6 +110,15 @@ function getNumberRelationType(input) {
     }
 }
 
+function updateDates(){
+    console.log(document.getElementById("unicornDOBRelation").value);
+    if (document.getElementById("unicornDOBRelation").value == "Between"){
+        document.getElementById("unicornDOBInput2").style.display = "block";
+    } else {
+        document.getElementById("unicornDOBInput2").style.display = "none";
+    }
+}
+
 /**
  * Generates a URL string from an object acquired from the web page
  * @param {Object} inputObject An Object storing the data from the web page
