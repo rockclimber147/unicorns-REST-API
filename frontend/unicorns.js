@@ -58,7 +58,38 @@ function getFieldValues() {
     } else if (vaccinated == 'No') {
         values.vaccinated = false;
     }
+
+    // hmake sure dob inputs are valid
+    handleDOBinputs();
+    if (document.getElementById("unicornDOBInput1").value !== "") {
+        switch (document.getElementById("unicornDOBRelation").value) {
+            case 'Before':
+                values.dob_$lt = document.getElementById("unicornDOBInput1").value;
+                break;
+            case 'After':
+                values.dob_$gt = document.getElementById("unicornDOBInput1").value;
+                break;
+            case 'Between':
+                values.dob_$btwn = document.getElementById("unicornDOBInput1").value + ',' + document.getElementById("unicornDOBInput2").value;
+                break;
+        }
+    }
     return values;
+}
+
+/**
+ * Checks that the DOB inputs are valid and throws an error if they are not
+ */
+function handleDOBinputs() {
+    let dobInput1 = document.getElementById("unicornDOBInput1");
+    let dobInput2 = document.getElementById("unicornDOBInput2");
+    if (document.getElementById("unicornDOBRelation").value == "Between") {
+        if (dobInput1.value === "" || dobInput2.value === "") {
+            throw new Error("You must enter two dates for the between option!")
+        } else if (dobInput1.value > dobInput2.value) {
+            throw new Error("The first date must be before the second date!")
+        }
+    }
 }
 
 
@@ -110,9 +141,11 @@ function getNumberRelationType(input) {
     }
 }
 
-function updateDates(){
+function updateDates() {
     console.log(document.getElementById("unicornDOBRelation").value);
-    if (document.getElementById("unicornDOBRelation").value == "Between"){
+    console.log(document.getElementById("unicornDOBInput1").value === "");
+    console.log(document.getElementById("unicornDOBInput2").value);
+    if (document.getElementById("unicornDOBRelation").value == "Between") {
         document.getElementById("unicornDOBInput2").style.display = "block";
     } else {
         document.getElementById("unicornDOBInput2").style.display = "none";
