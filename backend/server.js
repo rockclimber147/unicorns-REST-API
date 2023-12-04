@@ -33,7 +33,7 @@ app.get('/unicorns', async (req, res) => {
 
         queryObject = generateQueryObject(req.query)
         console.log('query object:', queryObject)
-        if (applySort){
+        if (applySort) {
             result = await unicorn.find(queryObject, displayObject).sort(sortObject);
         } else {
             result = await unicorn.find(queryObject, displayObject);
@@ -91,13 +91,19 @@ function generateQueryObject(incomingQuery) {
             // handle the case where the value is a relational query (weight or vampires)
             if (key.includes('_')) {
                 let [field, relation] = key.split('_')
-                queryParams.push({ [`${field}`]: { [`${relation}`]: incomingQuery[key] } })
+                if (relation === '$btwn') {
+                    let [min, max] = value.split(',')
+                    queryParams.push({ [`${field}`]: { $gte: min, $lte: max } })
+                } else {
+                    queryParams.push({ [`${field}`]: { [`${relation}`]: incomingQuery[key] } })
+                }
                 // handle the case where an array of string is given (loves or name)
             } else if (key === 'loves' || key === 'name') {
                 queryParams.push({ [`${key}`]: { $in: incomingQuery[key].split(',') } })
             } else {
                 queryParams.push({ [`${key}`]: incomingQuery[key] })
             }
+            console.log('query params:', queryParams)
         }
         // Return an empty object if no query parameters are given
         if (queryParams.length === 0) {
