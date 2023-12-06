@@ -86,6 +86,9 @@ function generateQueryObject(incomingQuery) {
         // Make an empty query object
         let queryParams = [];
         let queryObject = {};
+        if (!incomingQuery.hasOwnProperty('fieldRelationType')) {
+            incomingQuery.fieldRelationType = '$and'
+        }
         // Add and/or to the query object
         queryObject[incomingQuery.fieldRelationType] = queryParams;
         // Remove the fieldRelationType from the incoming query so it's not processed
@@ -106,6 +109,14 @@ function generateQueryObject(incomingQuery) {
                 // handle the case where an array of string is given (loves or name)
             } else if (key === 'loves' || key === 'name') {
                 queryParams.push({ [`${key}`]: { $in: incomingQuery[key].split(',') } })
+
+            } else if(key.includes('Exists')){
+                let [field] = key.split('Exists')
+                if(value === 'true'){
+                    queryParams.push({ [`${field}`]: { $exists: true } })
+                } else {
+                    queryParams.push({ [`${field}`]: { $exists: false } })
+                }
             } else {
                 queryParams.push({ [`${key}`]: incomingQuery[key] })
             }
