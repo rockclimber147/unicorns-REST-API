@@ -47,6 +47,9 @@ app.get('/unicorns', async (req, res) => {
 
 function generateSortObject(sortString) {
     try {
+        if (sortString === undefined) {
+            return {}
+        }
         let sortObject = {}
         let sortArray = sortString.replaceAll('asc', '1').replaceAll('desc', '-1').split(',')
         for (const key of sortArray) {
@@ -64,6 +67,9 @@ function generateDisplayObject(displayString) {
     try {
         // id is disabled by default
         let displayObject = { _id: 0 }
+        if (displayString === undefined) {
+            return displayObject
+        }
         let displayArray = displayString.split(',')
         for (const key of displayArray) {
             displayObject[key] = 1
