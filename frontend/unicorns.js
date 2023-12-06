@@ -191,7 +191,7 @@ function populateTable(data, params) {
             if (data[i][key] === undefined) {
                 cell.innerHTML = 'N/A';
             } else {
-                cell.innerHTML = data[i][key];
+                cell.innerHTML = String(data[i][key]).replaceAll(',', '<br>');
             }
             
             row.appendChild(cell);
