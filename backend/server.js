@@ -104,12 +104,19 @@ function generateQueryObject(incomingQuery) {
                     let [min, max] = value.split(',')
                     queryParams.push({ [`${field}`]: { $gte: min, $lte: max } })
                 } else {
-                    queryParams.push({ [`${field}`]: { [`${relation}`]: incomingQuery[key] } })
+                    queryParams.push({ [`${field}`]: { [`${relation}`]: value } })
                 }
                 // handle the case where an array of string is given (loves or name)
             } else if (key === 'loves' || key === 'name') {
-                queryParams.push({ [`${key}`]: { $in: incomingQuery[key].split(',') } })
-
+                queryParams.push({ [`${key}`]: { $in: value.split(',') } })
+            } else if (key.includes('Than')) {
+                if (key.includes('Less')) {
+                    let [field] = key.split('Less')
+                    queryParams.push({ [`${field}`]: { $lt: value } })
+                } else {
+                    let [field] = key.split('Greater')
+                    queryParams.push({ [`${field}`]: { $gt: value } })
+                }
             } else if(key.includes('Exists')){
                 let [field] = key.split('Exists')
                 if(value === 'true'){
@@ -118,7 +125,7 @@ function generateQueryObject(incomingQuery) {
                     queryParams.push({ [`${field}`]: { $exists: false } })
                 }
             } else {
-                queryParams.push({ [`${key}`]: incomingQuery[key] })
+                queryParams.push({ [`${key}`]: value })
             }
             console.log('query params:', queryParams)
         }
