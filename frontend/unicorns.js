@@ -188,7 +188,12 @@ function populateTable(data, params) {
         let row = document.createElement("tr");
         for (let key of params) {
             let cell = document.createElement("td");
-            cell.innerHTML = data[i][key];
+            if (data[i][key] === undefined) {
+                cell.innerHTML = 'N/A';
+            } else {
+                cell.innerHTML = data[i][key];
+            }
+            
             row.appendChild(cell);
         }
         table.appendChild(row);
