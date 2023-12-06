@@ -48,9 +48,9 @@ app.get('/unicorns', async (req, res) => {
 function generateSortObject(sortString) {
     try {
         let sortObject = {}
-        let sortArray = sortString.split(',')
+        let sortArray = sortString.replaceAll('asc', '1').replaceAll('desc', '-1').split(',')
         for (const key of sortArray) {
-            let [field, order] = key.split(':')
+            let [field, order] = key.split('.')
             sortObject[field] = parseInt(order)
         }
         return sortObject

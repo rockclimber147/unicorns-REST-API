@@ -210,7 +210,7 @@ document.getElementById("unicornSearchButton").addEventListener("click", async (
         console.log('Display parameters:', values.display);
 
         // Add sort parameters
-        values.sort = document.getElementById("unicornSortByInput").value.toLowerCase().replaceAll('ascending', '1').replaceAll('descending', '-1');
+        values.sort = document.getElementById("unicornSortByInput").value.toLowerCase().replaceAll('ascending', 'asc').replaceAll('descending', 'desc').replaceAll(':', '.');
         console.log('Sort parameters:', values.sort);
 
         let queryParams = generateRequestURL(values);
