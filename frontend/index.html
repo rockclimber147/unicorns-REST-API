@@ -26,6 +26,10 @@
         }
         th {
             text-align: center;
+            padding-left:10px;
+            padding-right:10px;
+            border: 1px solid black;
+            background-color: rgb(172, 172, 172);
         }
         td {
             text-align: center;
@@ -57,7 +61,7 @@
                         <option>less than:</option>
                         <option>equal to:</option>
                     </select></label>
-                <input type="text" id="unicornWeightInput" class="form-control" placeholder="Enter a number">
+                <input type="number" pattern="[0-9]" id="unicornWeightInput" class="form-control" placeholder="Enter a number">
             </p>
             <p class="form-group">
                 <label>Gender</label>
@@ -74,7 +78,7 @@
                         <option>less than:</option>
                         <option>equal to:</option>
                     </select></label>
-                <input type="text" id="unicornVampiresInput" class="form-control" placeholder="Enter a number">
+                <input type="number" pattern="[0-9]" id="unicornVampiresInput" class="form-control" placeholder="Enter a number">
             </p>
             <p class="form-group">
                 <label for="genderInput">Vaccinated</label>
